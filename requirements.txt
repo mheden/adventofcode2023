@@ -1,0 +1,6 @@
+black
+flake8
+flake8-bugbear
+flake8-expression-complexity
+flake8_simplify
+pep8-naming
