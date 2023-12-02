@@ -1,4 +1,4 @@
-from utils import slurp, unpack, assert_eq
+from utils import slurp, unpack, assert_eq, numbers
 import re
 import math
 from collections import defaultdict
@@ -6,25 +6,21 @@ from collections import defaultdict
 
 def part1(s):
     sum_ = 0
-    for game in unpack(s):
+    for line in unpack(s):
         bag = defaultdict(lambda: 0)
-        m = re.search(r"Game (\d+): (.+)", game)
-        for round_ in m.group(2).split(";"):
-            for count, color in re.findall(r"(\d+) (\w+)", round_.strip()):
-                bag[color] = max(bag[color], int(count))
+        for count, color in re.findall(r"(\d+) (\w+)", line):
+            bag[color] = max(bag[color], int(count))
         if (bag["red"] <= 12) and (bag["green"]) <= 13 and (bag["blue"] <= 14):
-            sum_ += int(m.group(1))
+            sum_ += numbers(line)[0]
     return sum_
 
 
 def part2(s):
     sum_ = 0
-    for game in unpack(s):
+    for line in unpack(s):
         bag = defaultdict(lambda: 0)
-        m = re.search(r"Game (\d+): (.+)", game)
-        for round_ in m.group(2).split(";"):
-            for count, color in re.findall(r"(\d+) (\w+)", round_.strip()):
-                bag[color] = max(bag[color], int(count))
+        for count, color in re.findall(r"(\d+) (\w+)", line):
+            bag[color] = max(bag[color], int(count))
         sum_ += math.prod(bag.values())
     return sum_
 
