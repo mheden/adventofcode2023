@@ -1,5 +1,4 @@
 from utils import slurp, unpack, assert_eq
-import math
 import re
 
 
@@ -8,25 +7,26 @@ def parse(line):
     winning, my = line.split("|")
     winning = set(map(int, re.split(r"\s+", winning.strip())))
     my = set(map(int, re.split(r"\s+", my.strip())))
-    return winning & my
+    return len(winning & my)
 
 
 def part1(s):
     sum_ = 0
     for line in unpack(s):
-        winning = parse(line)
-        if len(winning) > 0:
-            sum_ += int(math.pow(2, len(winning) - 1))
+        winnings = parse(line)
+        if winnings > 0:
+            sum_ += 2 ** (winnings - 1)
     return sum_
 
 
 def part2(s):
     cards = []
-    for _ in unpack(s):
+    lines = unpack(s)
+    for _ in lines:
         cards.append(1)
-    for i, line in enumerate(unpack(s)):
-        for n in range(len(parse(line))):
-            cards[i + 1 + n] += 1 * cards[i]
+    for i, line in enumerate(lines):
+        for n in range(parse(line)):
+            cards[i + 1 + n] += cards[i]
     return sum(cards)
 
 
