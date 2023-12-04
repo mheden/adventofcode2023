@@ -18,6 +18,25 @@ class P2d:
         return "P2d(%d, %d)" % (self.x, self.y)
 
 
+class Rect:
+    def __init__(self, tl: P2d, br: P2d):
+        assert_ge(br.x, tl.x)
+        assert_ge(br.y, tl.y)
+        self.tl = tl
+        self.br = br
+
+    def overlap(self, other):
+        return not (
+            self.br.x < other.tl.x
+            or self.tl.x > other.br.x
+            or self.br.y < other.tl.y
+            or self.tl.y > other.br.y
+        )
+
+    def __repr__(self):
+        return "Rect(%s, %s)" % (self.tl, self.br)
+
+
 def neighbours(x, y, grid):
     """Return the coordinates and value of all neighbours of (x, y)"""
     n = set()
@@ -68,6 +87,10 @@ def xor(a, b):
 
 def assert_eq(a, b):
     assert a == b, "%s == %s" % (a, b)
+
+
+def assert_ge(a, b):
+    assert a >= b, "%s >= %s" % (a, b)
 
 
 def chunks(data, size):
@@ -152,3 +175,9 @@ if __name__ == "__main__":
 
     # numbers
     assert_eq([1, 2, 3, 4], numbers("hell1o world 2=3++++++4"))
+
+    # rect
+    r = Rect(P2d(1, 1), P2d(3, 3))
+    assert r.overlap(Rect(P2d(1, 1), P2d(2, 2)))
+    assert not r.overlap(Rect(P2d(4, 4), P2d(5, 5)))
+    assert r.overlap(Rect(P2d(0, 1), P2d(1, 1)))
