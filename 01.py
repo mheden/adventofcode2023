@@ -60,12 +60,12 @@ zoneight234
 7pqrstsixteen
 """
 
-print("#--- Day 1.1:", end=" ")
+print("#--- Day 1.1: Trebuchet?!:", end=" ")
 
 assert_eq(part1(testdata1), 142)
 print(part1(filedata))
 
-print("#--- Day 1.2:", end=" ")
+print("#--- Day 1.2: Trebuchet?!:", end=" ")
 
 assert_eq(part2(testdata2), 281)
 print(part2(filedata))
